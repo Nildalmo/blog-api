@@ -34,6 +34,6 @@ app.use((req, res) =>{
 
 app.listen(process.env.PORT,()=>{
     console.log(
-        `Servidor executando em: ${process.env.HOST}: ${process.env.PORT}`
+        `Servidor executando em: ${process.env.HOST}`
     );
 });
