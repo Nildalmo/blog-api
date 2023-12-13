@@ -1,15 +1,17 @@
 import express from "express";
 import cors from "cors";
 import routesV1 from "./routes/routesV1";
+import { exeptionHandler } from "./middlewares/execptionHandler";
 
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
+
 app.use((req,res, next) => {
-    console.log(`[${req.method} ${req.path}]`);
-    next();
+   console.log(`[${req.method} ${req.path}]`);
+   next();
 });
 
 app.use(
@@ -28,7 +30,7 @@ app.get("/",(req,res)=>{
    );
  });
 
-app.use((req, res) =>{
+ app.use((req, res) =>{
     res.status(404).json(
      JSON.stringify({    
      error: "Not Found",
@@ -36,9 +38,9 @@ app.use((req, res) =>{
     })
    );
 });
-
+app.use(exeptionHandler);
 app.listen(process.env.PORT,()=>{
     console.log(
-        `Servidor executando em: ${process.env.HOST}`
+        `Servidor executando em: ${process.env.HOST}:${process.env.PORT}`
     );
 });
