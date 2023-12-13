@@ -1,9 +1,9 @@
 import{Router} from "express";
+import { login } from "../../controllers/UserControllers";
 
-const RoutesV1 = Router();
 
-RoutesV1.post("/login", (req, res) =>{
-    res.send("Realiza Login.");
-})
+const authRoutes = Router();
 
-export default RoutesV1;
+authRoutes.post("/login", login);
+
+export default authRoutes;

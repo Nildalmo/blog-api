@@ -1,11 +1,27 @@
 import { PrismaClient, User } from "@prisma/client";
 import { PasswordEncoder } from './PasswordEncoder';
 import { NotFoundException } from "../exceptions/NotFoundException";
+import * as jwt from "jsonwebtoken";
+import { randomUUID } from "crypto";
 
 interface StoreUser extends Omit<User, "id" | "createdAt" | "updatedAt"> {}
 interface UpdateUSer extends Partial<User>{}
+interface PayloadJwt{
+    iat:number;
+    jti:string;
+    sub:string;
+    email:string;
+    exp:number;
+
+}
 
 export class UserService{
+    static getUserByEmail(email: any) {
+        throw new Error('Method not implemented.');
+    }
+    static verifyToken(arg0: string): { email: any; } {
+        throw new Error('Method not implemented.');
+    }
     private readonly passwordEncoder: PasswordEncoder;
     private readonly prisma: PrismaClient;
             
@@ -59,5 +75,23 @@ if (!user) {
                     id,
                 },
             });
-        }  
+        } 
+
+     signToken(user: User): string {
+            return jwt.sign(
+                {
+                jti: randomUUID(),
+                sub: user.id,
+                iat: Math.floor(Date.now() / 1000)-3,
+                email: user.email,
+            },
+             process.env.JWT_SECRET as string,
+             {
+                expiresIn: `${process.env.JWT_EXPIRATION}h`,
+             }
+            );
+        }
+        verifyToken(token: string):PayloadJwt{
+            return jwt.verify(token, process.env.JWT_SECRET as string) as PayloadJwt;
+        }
     }
