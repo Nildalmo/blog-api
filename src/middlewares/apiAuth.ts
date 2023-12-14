@@ -9,19 +9,27 @@ export const apiAuth = async (
     next: NextFunction
     ) => {
  const authorization = request.headers.authorization;
- if(authorization == null || !authorization.startsWith("Bearer")) {
-    next(new UnathorizedException("Acesso não autorizado"));
+
+if(authorization ==null ||typeof authorization == 'undefined'){
+   next(new UnathorizedException("Acesso não autorizado!"));
+}
+ const headerArray = authorization.split(" ");
+if (headerArray[0] !=="Bearer"){
+   next(new UnathorizedException("Acesso não autorizado!"));
+   
+} console.log(headerArray)
+const token = headerArray[1];
+ if (!token){
+   next(new UnathorizedException("Acesso não autorizado!"));
  }
- const token = authorization?.split(" ")[1];
 
  try {
     const userService: UserService = new UserService();
-    const {email} = UserService.verifyToken(token as string);
-    const user = UserService.getUserByEmail(email);
+    const {email} = userService.verifyToken(token as string);
+    const user = userService.getUserByEmail(email);
     request.user = user;
     next();
- } catch (error) {
-    next(error);
-
-    };
- }
+ } catch (error: any){
+   next(new UnathorizedException(error.message));
+    }
+ };

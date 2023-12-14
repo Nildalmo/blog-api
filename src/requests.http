@@ -5,23 +5,25 @@ Content-Type: application/json
     
        "name": "Alex Junior",
     "birthDate": "1997-04-29",
-    "email": "alexjr.anp@gmail.com",
+    "email": "cleitinnajuju.anp@gmail.com",
     "password": "123456789",
-    "gender": "Male" 
+    "gender": "Male"
   
 }
 ### 
 
-POST http://127.0.0.1:3000/api/v1/users/login HTTP/1.1
+POST http://127.0.0.1:3000/api/v1/login HTTP/1.1
 Content-Type: application/json
 
 {
-    "email": "alexjr.anp@gmail.com",
-    "password": "12345679",
+   "email": "cleitinnajuju.anp@gmail.com",
+    "password": "123456789" 
 }
+
 ###
 
 GET http://127.0.0.1:3000/api/v1/users HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJlY2YyZTMwZC02Y2NmLTQzNjQtODZkYS00NWVmMzc5MGNiYzYiLCJzdWIiOiJhNDkwNTM0My03YjIyLTQzMTgtODkxYi1jYTkwMGNmM2ViZTMiLCJpYXQiOjE3MDI1MTUwMzUsImVtYWlsIjoiY2xlaXRpbm5hanVqdS5hbnBAZ21haWwuY29tIiwiZXhwIjoxNzAyNTIyMjM1fQ.u8NmtIVH7b-G_txdzRtLu-qFOYG5rbebv1gJmz2KxO4
 ###
 
 
